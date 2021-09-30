@@ -43,6 +43,14 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 " Rime
 au BufNewFile,BufRead *.dict.yaml set softtabstop=0 noexpandtab
 
+" c,cpp
+au BufNewFile,BufRead *.c set shiftwidth=2 softtabstop=2
+au BufNewFile,BufRead *.cpp set shiftwidth=2 softtabstop=2
+au BufNewFile,BufRead *.cc set shiftwidth=2 softtabstop=2
+au BufNewFile,BufRead *.cxx set shiftwidth=2 softtabstop=2
+au BufNewFile,BufRead *.h set shiftwidth=2 softtabstop=2
+au BufNewFile,BufRead *.hpp set shiftwidth=2 softtabstop=2
+
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 " Plug 'projekt0n/github-nvim-theme'
