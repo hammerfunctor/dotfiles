@@ -61,6 +61,8 @@ Plug 'preservim/nerdcommenter'
 Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'voldikss/vim-mma'
+"Plug 'rsmenon/vim-mathematica.git'
 call plug#end()
 
 " lua << EOF
