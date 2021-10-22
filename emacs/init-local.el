@@ -90,7 +90,7 @@
 (add-to-list 'default-frame-alist (cons 'height 50))
 
 ;; ============================== Julia
-(defun ijulia-console ()
+(defun my/ijulia-console ()
   "Runs IJulia in a `term' buffer."
   (interactive)
   (require 'term)
@@ -105,7 +105,7 @@
     (term-char-mode)
     (switch-to-buffer termbuf)))
 
-(defun julia-repl ()
+(defun my/julia-repl ()
   "Runs Julia in a screen session in a `term' buffer."
   (interactive)
   (require 'term)
