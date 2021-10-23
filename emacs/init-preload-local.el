@@ -3,8 +3,11 @@
 
 ;;; Code:
 (setq
+ url-proxy-services '(("http" . "127.0.0.1:7891")
+                      ("https" . "127.0.0.1:7891"))
  package-archives
- '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+ '(
+   ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
    ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
    ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
    ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/"))

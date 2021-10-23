@@ -22,10 +22,6 @@
    ;; if this variable is not nil, org-mode cannot call
    ;; xdg-open correctly
    process-connection-type nil
-
-   url-proxy-services
-   '(("http" . "127.0.0.1:7891")
-     ("https" . "127.0.0.1:7891"))
    )
   )
 
@@ -36,6 +32,13 @@
 (require-package 'cyberpunk-theme)
 (require-package 'julia-mode)
 (require-package 'lsp-mode)
+(require-package 'julia-repl)
+;;(require-package 'ess)
+(require-package 'ein)
+;;(require-package 'ob-ipython)
+;;(require-package 'ob-ess-julia)
+;;(defalias 'org-babel-execute:julia 'org-babel-execute:ess-julia)
+
 ;;(require-package 'dap-mode)
 ;;(require-package 'yasnippet)
 ;;(require-package 'helm-xref)
@@ -90,6 +93,8 @@
 (add-to-list 'default-frame-alist (cons 'height 50))
 
 ;; ============================== Julia
+(add-hook 'julia-mode-hook 'julia-repl-mode)
+
 (defun my/ijulia-console ()
   "Runs IJulia in a `term' buffer."
   (interactive)
@@ -134,6 +139,19 @@
 	     org-src-fontify-natively t
              org-startup-folded 'content)))
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (shell . t)
+   (ruby . t)
+   (gnuplot . t)
+   (emacs-lisp . t)
+   ;;(ess-julia . t)
+   (C . t)
+   (latex . t)
+   (ein . t)
+   ;;(ipython . t)
+   ))
 
 (defun my/org-inline-css-hook (exporter)
   "Redefine the html `EXPORTER'.
@@ -163,7 +181,6 @@ Insert custom inline css to automatically set the background of code to whatever
        \n)))
 
 
-;; highlight parentheses
 (setq-default
  ;; c-basic-offset 4
  python-indent-offset 4
