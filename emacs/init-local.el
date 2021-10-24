@@ -27,9 +27,15 @@
 
 (my/general-init)
 
+(require-package 'org-bullets)
 
 (require-package 'leuven-theme)
 (require-package 'cyberpunk-theme)
+(require-package 'tron-legacy-theme)
+(require-package 'color-theme-modern)
+
+(require-package 'poet-theme)
+
 (require-package 'julia-mode)
 (require-package 'lsp-mode)
 (require-package 'julia-repl)
@@ -48,7 +54,12 @@
 (setq my/color-themes
       '(leuven-dark
 	leuven
-	cyberpunk)
+	cyberpunk
+        ;;tron-legacy
+        kingsajz
+        pok-wog
+        aliceblue
+        poet)
       themes-to-cycle nil)
 
 (defun my/theme-cycle ()
@@ -70,10 +81,13 @@
 
 ;;(set-frame-font "FiraCode Nerd Font Mono 11" nil t)
 (set-face-font 'default "FiraCode Nerd Font Mono 11") ;; for x11
+(set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
+(set-face-attribute 'variable-pitch nil :family "Noto Serif")
 ;;(set-face-font 'default "FiraCode Nerd Font Mono 13") ;; for wayland
 ;;(set-face-font 'default "Source Code Pro 10")
 ;;(set-face-font 'default "Hack 10")
 (set-fontset-font t 'symbol "Noto Color Emoji")
+
 
 ;; set window size
 (defun set-frame-size-according-to-resolution ()
@@ -128,6 +142,14 @@
 ;; ============================== ein end
 
 ;; ============================== org-mode
+(setq org-bullets-face-name 'org-bullet-face)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(setq org-bullets-bullet-list '("✙" "♱" "♰" "☥" "✞" "✟" "✝" "†" "✠" "✚" "✜" "✛" "✢" "✣" "✤" "✥"))
+
+(add-hook 'text-mode-hook
+          (lambda ()
+            ;;            (variable-pitch-mode 1)
+            ))
 
 (add-hook 'org-mode-hook
 	  (lambda ()
@@ -141,8 +163,10 @@
              org-num-skip-unnumbered t
              org-num-skip-footnotes t
              org-src-fontify-natively t
-             org-startup-folded 'content)
-            ))
+             org-startup-folded 'content
+             )
+            )
+          )
 
 (org-babel-do-load-languages
  'org-babel-load-languages
