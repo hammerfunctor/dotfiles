@@ -124,20 +124,21 @@
 ;; ============================== Julia end
 
 ;; ============================== org-mode
+
 (add-hook 'org-mode-hook
 	  (lambda ()
-	    (setq
-
-	     truncate-lines nil
-	     org-format-latex-options (plist-put
-				       org-format-latex-options :scale 2.0)
-	     org-html-validation-link t
-	     org-startup-numerated t
-	     org-num-skip-commented t
-	     org-num-skip-unnumbered t
-	     org-num-skip-footnotes t
-	     org-src-fontify-natively t
-             org-startup-folded 'content)))
+            (setq
+             truncate-lines nil
+             org-format-latex-options (plist-put
+			               org-format-latex-options :scale 2.0)
+             org-html-validation-link t
+             org-startup-numerated t
+             org-num-skip-commented t
+             org-num-skip-unnumbered t
+             org-num-skip-footnotes t
+             org-src-fontify-natively t
+             org-startup-folded 'content)
+            ))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
