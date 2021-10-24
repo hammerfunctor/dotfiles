@@ -123,6 +123,10 @@
 
 ;; ============================== Julia end
 
+;; ============================== ein
+(setq ein:output-area-inlined-images t)
+;; ============================== ein end
+
 ;; ============================== org-mode
 (add-hook 'org-mode-hook
 	  (lambda ()
@@ -185,11 +189,12 @@ Insert custom inline css to automatically set the background of code to whatever
  ;; c-basic-offset 4
  python-indent-offset 4
  )
+
+
 (add-hook 'scheme-mode-hook
           (lambda ()
             (put 'tm-define 'scheme-indent-function 1)
             (put 'tm-menu 'scheme-indent-function 1)))
-
 
 ;;(lsp-treemacs-sync-mode 1)
 
@@ -203,7 +208,7 @@ Insert custom inline css to automatically set the background of code to whatever
 (add-hook 'c++-mode-hook 'lsp)
 ;;(add-hook 'rust-mode-hook 'lsp)
 
-(setq gc-cons-threshold (* 100 1024 1024)
+(setq ;;gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
       treemacs-space-between-root-nodes nil
       company-idle-delay 0.0
