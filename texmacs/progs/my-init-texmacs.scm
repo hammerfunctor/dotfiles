@@ -42,6 +42,22 @@
  ("A-L" (clipboard-paste-import "latex" "primary"))
  ("A-G" (set-image-size (find-image (cursor-tree)) "0.318par"))
 
+ ("M-E p" (my/export-to-pdf))
+ )
+
+(kbd-map
+ (:mode in-math?)
+ ;; ========== double letters
+ ("s s" (make-big-operator "sum"))
+ ("i i" (make-big-operator "int"))
+ ("p p" (make-big-operator "prod"))
+ ("m m" (make 'matrix))
+ ("^ ^" (make-wide "^"))
+ ("v v" (make-wide "<vect>"))
+  ("u u" ((lambda ()
+           ;;(insert-go-to '(math "") '(0 0))
+           (insert-go-to '(below "" "") '(0 0))
+           (insert-go-to '(wide* "" "<wide-underbrace>") '(0 0)))))
  )
 
 (kbd-map
@@ -75,6 +91,13 @@
   ("' ' ' c p p return"       (make 'cpp-code))
   ("' ' ' p y t h o n return" (make 'python-code))
   ("' ' ' s c m return"       (make 'scm-code)))
+
+;; export to pdf
+(tm-define (my/export-to-pdf)
+  (with name (propose-name-buffer)
+        (if (string-ends? name ".tm")
+            (with pdf-name (string-append (string-drop-right name 3) ".pdf")
+                  (wrapped-print-to-file pdf-name)))))
 
 ;; use small font for code
 (tm-define (my/session-small type)
