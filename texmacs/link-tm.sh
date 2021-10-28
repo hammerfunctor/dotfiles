@@ -1,14 +1,23 @@
 #!/bin/sh
 
 basedir=$(dirname $(readlink -f $0))
-progsdir=$basedir/progs
-tmprogs=$HOME/.TeXmacs/progs
+TMHOME=$HOME/.TeXmacs
 
-for file in $progsdir/*.scm; do
-    filebasename=$(basename $file)
-    if [[ -f $tmprogs/$filebasename && ! -h $tmprogs/$filebasename ]]; then
-        echo "$tmprogs/$filebasename exists, skip it..."
-    else
-        ln -sf $file $tmprogs/$filebasename
+subs () {
+    tmsubdir=$TMHOME/$1
+    for file in $basedir/$1/*; do
+        filebasename=$(basename $file)
+        dstfile=$tmsubdir/$filebasename
+        if [[ -f $dstfile && ! -h $dstfile ]]; then
+            echo "$dstfile exists, skip it..."
+        else
+            ln -sf $file $dstfile
+        fi
+    done
+}
+
+for f in $basedir/*; do
+    if [ -d $f ]; then
+        subs $(basename $f)
     fi
 done
