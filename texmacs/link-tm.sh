@@ -1,6 +1,14 @@
 #!/bin/sh
 
-dir=$(dirname $(readlink -f $0))
+basedir=$(dirname $(readlink -f $0))
+progsdir=$basedir/progs
+tmprogs=$HOME/.TeXmacs/progs
 
-ln -sf $dir/progs/my-init-buffer.scm $HOME/.TeXmacs/progs/my-init-buffer.scm
-ln -sf $dir/progs/my-init-texmacs.scm $HOME/.TeXmacs/progs/my-init-texmacs.scm
+for file in $progsdir/*.scm; do
+    filebasename=$(basename $file)
+    if [[ -f $tmprogs/$filebasename && ! -h $tmprogs/$filebasename ]]; then
+        echo "$tmprogs/$filebasename exists, skip it..."
+    else
+        ln -sf $file $tmprogs/$filebasename
+    fi
+done
