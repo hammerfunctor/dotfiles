@@ -4,6 +4,8 @@
 (set-session-multiline-input "scheme" "default" #t)
 (set-session-multiline-input "julia" "default" #t)
 (set-session-multiline-input "mma" "default" #t)
+(set-session-multiline-input "gnuplot" "default" #t)
+
 
 
 (use-modules (texmacs menus main-menu))
