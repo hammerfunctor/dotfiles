@@ -36,6 +36,7 @@
 
 (require-package 'poet-theme)
 
+(require-package 'rust-mode)
 (require-package 'julia-mode)
 (require-package 'lsp-mode)
 (require-package 'julia-repl)
