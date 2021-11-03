@@ -3,13 +3,13 @@
 import YAML, HTTP, JSON3
 import Base64: base64decode
 
-const config_template_path = joinpath(dirname(realpath(@__FILE__)), "config.template.yaml")
+const config_template_path = joinpath(dirname((@__FILE__)), "config.template.yaml")
 
 function update_clash(template::Dict, extras::Union{Dict,Nothing})
     # constants
     config_clash_path = joinpath(ENV["HOME"], ".config/clash/config.clash.yaml")
     update_keys = ["port", "socks-port", "allow-lan", "bind-address", "log-level", "external-controller"]
-    url_clash = read("ghelper-clash.txt") |> String |> strip
+    url_clash = joinpath(dirname(@__FILE__),"ghelper-clash.txt") |> read |> String |> strip
     # constants end
 
     response = HTTP.get(url_clash)
@@ -31,7 +31,7 @@ function update_default!(template::Dict, extras::Union{Dict,Nothing})
     # constants
     config_path = joinpath(ENV["HOME"], ".config/clash/config.yaml")
     update_keys = ["port", "socks-port", "allow-lan", "bind-address", "log-level", "external-controller"]
-    url = read("ghelper-default.txt") |> String |> strip
+    url = joinpath(dirname(@__FILE__),"ghelper-default.txt") |> read |> String |> strip
     # constants end
 
     proxies::Vector{Dict} = fetch(url)

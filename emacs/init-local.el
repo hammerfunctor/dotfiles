@@ -28,6 +28,7 @@
 (my/general-init)
 
 (require-package 'org-bullets)
+(require-package 'pdf-tools)
 
 (require-package 'leuven-theme)
 (require-package 'cyberpunk-theme)
@@ -50,6 +51,7 @@
 ;;(require-package 'yasnippet)
 ;;(require-package 'helm-xref)
 
+(pdf-loader-install)
 
 ;; cycle color themes
 (setq my/color-themes
