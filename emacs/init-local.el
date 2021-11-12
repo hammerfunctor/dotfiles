@@ -47,6 +47,7 @@
 ;;(require-package 'ob-ess-julia)
 ;;(defalias 'org-babel-execute:julia 'org-babel-execute:ess-julia)
 
+(require-package 'treemacs)
 ;;(require-package 'dap-mode)
 ;;(require-package 'yasnippet)
 ;;(require-package 'helm-xref)
@@ -234,7 +235,7 @@ Insert custom inline css to automatically set the background of code to whatever
 ;;(which-key-mode)
 (add-hook 'c-mode-hook 'lsp)
 (add-hook 'c++-mode-hook 'lsp)
-;;(add-hook 'rust-mode-hook 'lsp)
+(add-hook 'rust-mode-hook 'lsp)
 
 (setq ;;gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
