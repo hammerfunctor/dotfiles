@@ -51,15 +51,20 @@
  (:mode in-math?)
  ;; ========== double letters
  ("s s" (make-big-operator "sum"))
- ("i i" (make-big-operator "int"))
- ("p p" (make-big-operator "prod"))
+ ;; ("i i" (make-big-operator "int"))
+ ("i i" (insert '(concat (big "int") (rsub "a") (rsup "b"))))
+ ("p p" (insert '(concat (big "prod") (rsub "k"))))
  ("m m" (make 'matrix))
+ ("f f" (make 'frac))
+ ("r r" (make 'sqrt))
  ("^ ^" (make-wide "^"))
+ ("d d" (insert '(wide "x" "<dot>")))
+ ;; ("d d" (make-wide "<dot>"))
  ("v v" (make-wide "<vect>"))
-  ("u u" ((lambda ()
-           ;;(insert-go-to '(math "") '(0 0))
-           (insert-go-to '(below "" "") '(0 0))
-           (insert-go-to '(wide* "" "<wide-underbrace>") '(0 0)))))
+ ("u u" (insert-go-to '(below (wide* "" "<wide-underbrace>") "x") '(0 0 0)))
+
+ ;; ========== others
+ ("d e l" (insert "<nabla>"))
  )
 
 (kbd-map
@@ -146,7 +151,7 @@
                       (hlink
                        "hammer401@foxmail.com"
                        "mailto:hammer401@foxmail.com")))))
-      (doc-date (concat "(Dated: " (date) ")")))))
+      (doc-date (concat "(Dated: " (date "%B %e, %Y, %A") ")")))))
 
 
 ;; Directly used <extern|horizontal-text> will generate uneditable texts,
