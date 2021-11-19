@@ -51,6 +51,8 @@ au BufNewFile,BufRead *.cxx set shiftwidth=2 softtabstop=2
 au BufNewFile,BufRead *.h set shiftwidth=2 softtabstop=2
 au BufNewFile,BufRead *.hpp set shiftwidth=2 softtabstop=2
 
+au BufNewFile,BufRead *.lua set shiftwidth=2 softtabstop=2
+
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 " Plug 'projekt0n/github-nvim-theme'

@@ -50,7 +50,7 @@
 (kbd-map
  (:mode in-math?)
  ;; ========== double letters
- ("s s" (make-big-operator "sum"))
+ ("s s" (insert '(concat (big "sum") (rsub "k"))))
  ;; ("i i" (make-big-operator "int"))
  ("i i" (insert '(concat (big "int") (rsub "a") (rsup "b"))))
  ("p p" (insert '(concat (big "prod") (rsub "k"))))
