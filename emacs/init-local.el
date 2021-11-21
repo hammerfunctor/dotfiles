@@ -296,7 +296,7 @@ Insert custom inline css to automatically set the background of code to whatever
      '("Description: "
        "#+TITLE: " \n
        "#+AUTHOR: Hammer Hu" \n
-       "#+DATE: " (format-time-string "%A, %e %B %Y %H:%M") \n
+       "#+DATE: " (format-time-string "%A, %e %B, %Y, %H:%M") \n
        "#+SETUPFILE: " \n
        \n)))
 
