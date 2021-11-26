@@ -91,8 +91,12 @@
   ("j l tab" (my/session-small "julia"))
   ("p y tab" (my/session-small "python"))
   ("m m a tab" (my/session-small "mma"))
+  ("m m a f o l d tab" ((lambda ()
+                          (insert-go-to '(center (script-input "mma" "default" "%noprefix\n" "")) '(0 2 10))
+                          (insert-raw-return))))
   ("m a x i m a tab"(my/session-small "maxima"))
-  ("t k tab" (my/tikz))
+  ("t k c d tab" (my/tikz #t))
+  ("t k tab" (my/tikz #f))
 
   ;; insert some code
   ("' ' ' c p p return"       (make 'cpp-code))
@@ -112,14 +116,16 @@
   (make-session type "default"))
 
 ;; insert a tikz executable fold with prescribed text
-(tm-define (my/tikz)
+(tm-define (my/tikz cd?)
   (:secure #t)
-  (insert-go-to '(center "") '(0 0))
-  (insert-go-to '(script-input "tikz" "default" "" "") '(2 0))
-  (insert "%tikz -width 0.318par")
+  (insert-go-to '(center (script-input "tikz" "default" "%tikz -width 0.318par" "")) '(0 2 21))
+;;  (insert-go-to '(center "") '(0 0))
+;;  (insert-go-to '(script-input "tikz" "default" "" "") '(2 0))
+;;  (insert "%tikz -width 0.318par")
   (insert-raw-return)
-  (insert "\\usetikzlibrary{cd}")
-  (insert-return))
+  (when cd?
+    (insert "\\usetikzlibrary{cd}")
+    (insert-return)))
 
 ;; add a comment
 (use-modules (various comment-edit))
