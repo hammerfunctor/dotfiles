@@ -26,7 +26,9 @@
 
   <use-package|std|env|title-generic|header-article|section-article>
 
-  <use-package|preview-ref|number-long-article|comment>
+  <use-package|preview-ref|number-long-article>
+
+  use-package comment
 
   <use-package|framed-theorems>
 

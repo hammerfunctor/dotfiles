@@ -1,32 +1,31 @@
-(use-modules (dynamic session-edit))
 
+(use-modules (dynamic session-edit))
 (set-session-multiline-input "python" "default" #t)
 (set-session-multiline-input "scheme" "default" #t)
 (set-session-multiline-input "julia" "default" #t)
 (set-session-multiline-input "mma" "default" #t)
 (set-session-multiline-input "gnuplot" "default" #t)
+(set-session-multiline-input "graph" "default" #t)
 
 
 
-(use-modules (texmacs menus main-menu))
-
-
+;;(use-modules (texmacs menus main-menu))
 ;; I don't know how to add a new item to the `texmacs-menu'
-(tm-menu (my-menu)
-  (-> "Opening"
-      ("Dear Sir" (insert "Dear Sir,"))
-      ("Dear Madam" (insert "Dear Madam,")))
-  (-> "Closing"
-      ("Yours sincerely" (insert "Yours sincerely,"))
-      ("Greetings" (insert "Greetings."))))
+;;(tm-menu (my-menu)
+;;  (-> "Opening"
+;;      ("Dear Sir" (insert "Dear Sir,"))
+;;      ("Dear Madam" (insert "Dear Madam,")))
+;;  (-> "Closing"
+;;      ("Yours sincerely" (insert "Yours sincerely,"))
+;;      ("Greetings" (insert "Greetings."))))
 
 ;; To define new menus, you have to evaluate it first.
 ;; They are `lazy-define'd, which is not covered in the doc.
-(developer-menu)
-(menu-bind developer-menu
-  (group "User defined") (link my-menu)
-  ---
-  (former))
+;;(developer-menu)
+;;(menu-bind developer-menu
+;;  (group "User defined") (link my-menu)
+;;  ---
+;;  (former))
 
 (define (image? t) (tree-is? t 'image))
 (define (find-image t)
@@ -90,10 +89,10 @@
   ("s c m tab" (my/session-small "scheme"))
   ("j l tab" (my/session-small "julia"))
   ("p y tab" (my/session-small "python"))
+  ("g r a p h tab" (my/session-small "graph"))
   ("m m a tab" (my/session-small "mma"))
-  ("m m a f o l d tab" ((lambda ()
-                          (insert-go-to '(center (script-input "mma" "default" "%noprefix\n" "")) '(0 2 10))
-                          (insert-raw-return))))
+  ("m m a f o l d tab" (my/fold-small "mma" "%noprefix\n" 10))
+  ("g f o l d tab" (my/fold-small "graph" "%tikz -width 300" 16))
   ("m a x i m a tab"(my/session-small "maxima"))
   ("t k c d tab" (my/tikz #t))
   ("t k tab" (my/tikz #f))
@@ -115,6 +114,10 @@
   (insert-go-to '(small "") '(0 0))
   (make-session type "default"))
 
+(tm-define (my/fold-small type line index)
+  (insert-go-to `(center (small (script-input ,type "default" ,line ""))) `(0 0 2 ,index))
+  (insert-raw-return))
+
 ;; insert a tikz executable fold with prescribed text
 (tm-define (my/tikz cd?)
   (:secure #t)
@@ -127,21 +130,24 @@
     (insert "\\usetikzlibrary{cd}")
     (insert-return)))
 
-;; add a comment
-(use-modules (various comment-edit))
 (tm-define (my/comment)
-  (:secure #t)
-  (let* ((id (create-unique-id))
-         (mirror-id (create-unique-id))
-         (by "huzf")
-         (date (number->string (current-time)))
-         (lab (if (inside-comment?) 'nested-comment 'unfolded-comment))
-         (pos (list 6 0))
-         (type "comment"))
-    (insert-go-to `(,lab ,id ,mirror-id ,type ,by ,date "" "") pos)
-    ;;(notify-comments-editor)
-    )
-  )
+  (insert-go-to '(with "color" "blue" "[huzf: ]") '(2 7)))
+
+;; add a comment
+;; (use-modules (various comment-edit))
+;; (tm-define (my/comment)
+;;   (:secure #t)
+;;   (let* ((id (create-unique-id))
+;;          (mirror-id (create-unique-id))
+;;          (by "huzf")
+;;          (date (number->string (current-time)))
+;;          (lab (if (inside-comment?) 'nested-comment 'unfolded-comment))
+;;          (pos (list 6 0))
+;;          (type "comment"))
+;;     (insert-go-to `(,lab ,id ,mirror-id ,type ,by ,date "" "") pos)
+;;     ;;(notify-comments-editor)
+;;     )
+;;   )
 
 ;; insert the information of title and author
 (tm-define (title-author-info)
@@ -149,35 +155,29 @@
   '(document
      (doc-data
       (doc-title "(title here)")
-      (doc-author (author-data
-                   (author-name "Huzf")
-                   (author-note
-                    (concat
-                      "Anhui University, Hefei, Anhui, China, 230601, "
-                      (hlink
-                       "hammer401@foxmail.com"
-                       "mailto:hammer401@foxmail.com")))))
+      (doc-author
+       (author-data
+        (author-name "Huzf")
+        (author-note
+         (concat
+          "Anhui University, Hefei, Anhui, China, 230601, "
+          (hlink "hammer401@foxmail.com" "mailto:hammer401@foxmail.com")))))
       (doc-date (concat "(Dated: " (date "%B %e, %Y, %A") ")")))))
 
 
-;; Directly used <extern|horizontal-text> will generate uneditable texts,
-;; while texts that inserted by shortcut keys are editable.
-(tm-define (horizontal-text)
-  (:secure #t)
-  `(concat
-     "hahaha "
-     (hlink "shabi" "www.duckduckgo.com")))
-
-(tm-define (vertical-text)
-  (:secure #t)
-  `(document
-     "hahaha "
-     (hlink "shabi" "www.duckduckgo.com")))
-
-
-(tm-define (hello t)
-  (:secure #t)
-  `(concat "Hello " ,t "."))
+;; How to insert texts?
+;;
+;; Consecutive texts are yeilded by
+;;   `(concat "hahaha" (hlink "clickme" "www.duckduckgo.com"))
+;; like: (tm-define (h-text)
+;;         `(concat "hahaha" (hlink "clickme" "127.0.0.1")))
+;; Vectical consecutive texts are given by substituting `concat' by `document'
+;;
+;; Texts generated by <extern|horizontal-text> are uneditable,
+;; while texts inserted by `insert' is editable.
+;; If the scheme function contains some params, then params are still
+;; editable under `extern', though inconvenient.
+;; E.g., (tm-define (hello t) `(concat "Hello, " ,t "."))
 
 (tm-define (in-theorem? t)
   (cond ((tree-is-buffer? t) #f)
