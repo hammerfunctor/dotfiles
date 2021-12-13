@@ -1,0 +1,4 @@
+{
+    "lsp-wl.wolframExecutablePath": "/usr/local/Wolfram/Mathematica/12.3/Executables/wolfram",
+    "lsp-wl.wolframLanguageServerPath": "/home/huzf/usr/share/lsp-wl"
+}

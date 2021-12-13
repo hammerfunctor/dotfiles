@@ -1,40 +1,6 @@
 filetype plugin on
-set nu
-set noerrorbells
-set scrolloff=3
-set list
-set listchars=tab:--
-set wrap
-
-set wildmenu
-set wildmode=longest,list,full
-
-set hlsearch    " hls
-set ignorecase  " ic
-set incsearch   " is
-" prepend `inv` to a variable to toggle the setting
-" eg. `set invis`
-
-
-" set tabstop=2
-set expandtab
-set softtabstop=4
-set autoindent
-set shiftwidth=4
-
-set showmatch
-
-set autoread
-set autowrite
-set hidden
-set fileformat=unix
-
-set mouse=a
-
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+lua require('basic')
+lua require('kbd')
 
 " resume last closed line
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -43,21 +9,11 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 " Rime
 au BufNewFile,BufRead *.dict.yaml set softtabstop=0 noexpandtab
 
-" c,cpp
-au BufNewFile,BufRead *.c set shiftwidth=2 softtabstop=2
-au BufNewFile,BufRead *.cpp set shiftwidth=2 softtabstop=2
-au BufNewFile,BufRead *.cc set shiftwidth=2 softtabstop=2
-au BufNewFile,BufRead *.cxx set shiftwidth=2 softtabstop=2
-au BufNewFile,BufRead *.h set shiftwidth=2 softtabstop=2
-au BufNewFile,BufRead *.hpp set shiftwidth=2 softtabstop=2
-
-au BufNewFile,BufRead *.lua set shiftwidth=2 softtabstop=2
-
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 " Plug 'projekt0n/github-nvim-theme'
 Plug 'joshdick/onedark.vim'
-Plug 'vim-airline/vim-airline'       
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdcommenter'
 Plug 'luochen1990/rainbow'
@@ -80,28 +36,23 @@ call plug#end()
 
 " onedark theme
 "source $HOME/.config/nvim/themes/onedark.vim
-
-"colorscheme blue.vim
-"colorscheme darkblue.vim
-"colorscheme default.vim
-"colorscheme delek.vim
-"colorscheme desert.vim
-"colorscheme elflord.vim
-"colorscheme evening.vim
-"colorscheme industry.vim
-"colorscheme koehler.vim
-"colorscheme morning.vim
-"colorscheme murphy.vim
-"colorscheme pablo.vim
-"colorscheme peachpuff.vim
-"colorscheme ron.vim
-"colorscheme shine.vim
-"colorscheme slate.vim
-"colorscheme torte.vim
-"colorscheme zellner.vim
-
-
-
+"
+"colorscheme default
+"colorscheme delek
+"colorscheme desert
+colorscheme elflord
+colorscheme evening
+colorscheme industry
+colorscheme koehler
+"colorscheme morning
+colorscheme murphy
+colorscheme pablo
+"colorscheme peachpuff
+"colorscheme ron
+"colorscheme shine
+colorscheme slate
+colorscheme torte
+"colorscheme zellner
 
 
 " indentLine
