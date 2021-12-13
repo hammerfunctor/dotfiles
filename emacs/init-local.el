@@ -40,7 +40,12 @@
 (require-package 'rust-mode)
 (require-package 'julia-mode)
 (require-package 'lsp-mode)
-(require-package 'julia-repl)
+(require-package 'markdown-mode)
+;;(require-package 'julia-repl)
+(require-package 'vterm)
+(require-package 'julia-snail)
+
+
 ;;(require-package 'ess)
 (require-package 'ein)
 ;;(require-package 'ob-ipython)
@@ -107,11 +112,12 @@
 ;; besides, `(if (window-system) (set-frame-size (selected-frame) 124 40))`
 ;; is also nice and concise
 ;;(set-frame-size-according-to-resolution)
-(add-to-list 'default-frame-alist (cons 'width 100))
+(add-to-list 'default-frame-alist (cons 'width 130))
 (add-to-list 'default-frame-alist (cons 'height 50))
 
 ;; ============================== Julia
-(add-hook 'julia-mode-hook 'julia-repl-mode)
+;;(add-hook 'julia-mode-hook 'julia-repl-mode)
+(add-hook 'julia-mode-hook 'julia-snail-mode)
 
 (defun my/ijulia-console ()
   "Runs IJulia in a `term' buffer."

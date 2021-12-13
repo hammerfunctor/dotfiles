@@ -9,7 +9,8 @@
  '(
    ("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
    ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-   ("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+   ;;("melpa-stable" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+   ("melpa-stable" . "http://elpa.zilongshanren.com/stable-melpa/")
    ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/"))
  )
 
