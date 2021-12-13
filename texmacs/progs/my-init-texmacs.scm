@@ -91,7 +91,7 @@
   ("p y tab" (my/session-small "python"))
   ("g r a p h tab" (my/session-small "graph"))
   ("m m a tab" (my/session-small "mma"))
-  ("m m a f o l d tab" (my/fold-small "mma" "%noprefix\n" 10))
+  ("m m a f o l d tab" (my/fold-small "mma" "" 0))
   ("g f o l d tab" (my/fold-small "graph" "%tikz -width 300" 16))
   ("m a x i m a tab"(my/session-small "maxima"))
   ("t k c d tab" (my/tikz #t))
