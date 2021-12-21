@@ -20,8 +20,22 @@ Plug 'luochen1990/rainbow'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'voldikss/vim-mma'
+Plug 'zah/nim.vim'
 "Plug 'rsmenon/vim-mathematica.git'
 call plug#end()
+
+
+fun! JumpToDef()
+  if exists("*GotoDefinition_" . &filetype)
+    call GotoDefinition_{&filetype}()
+  else
+    exe "norm! \<C-]>"
+  endif
+endf
+
+" Jump to tag
+nn <M-g> :call JumpToDef()<cr>
+ino <M-g> <esc>:call JumpToDef()<cr>i
 
 " lua << EOF
 " require("github-theme").setup({

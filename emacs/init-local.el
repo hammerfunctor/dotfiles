@@ -29,6 +29,7 @@
 
 (require-package 'org-bullets)
 (require-package 'pdf-tools)
+(require-package 'org-static-blog)
 
 (require-package 'leuven-theme)
 (require-package 'cyberpunk-theme)
@@ -152,45 +153,45 @@
 ;; ============================== ein end
 
 ;; ============================== org-mode
-(setq org-bullets-face-name 'org-bullet-face)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(setq org-bullets-bullet-list '("✙" "♱" "♰" "☥" "✞" "✟" "✝" "†" "✠" "✚" "✜" "✛" "✢" "✣" "✤" "✥"))
-
 (add-hook 'text-mode-hook
           (lambda ()
             ;;            (variable-pitch-mode 1)
             ))
 
-(add-hook 'org-mode-hook
-	  (lambda ()
-            (setq
-             truncate-lines nil
-             org-format-latex-options (plist-put
-			               org-format-latex-options :scale 2.0)
-             org-html-validation-link t
-             org-startup-numerated t
-             org-num-skip-commented t
-             org-num-skip-unnumbered t
-             org-num-skip-footnotes t
-             org-src-fontify-natively t
-             org-startup-folded 'content
-             )
-            )
-          )
+(with-eval-after-load 'org
+  (setq truncate-lines nil)
+  (setq truncate-lines nil)
+  (setq org-format-latex-options
+        (plist-put org-format-latex-options :scale 2.0))
+  (setq org-html-validation-link t)
+  (setq org-startup-numerated t)
+  (setq org-num-skip-commented t)
+  (setq org-num-skip-unnumbered t)
+  (setq org-num-skip-footnotes t)
+  (setq org-src-fontify-natively t)
+  (setq org-startup-folded 'content)
+  ;;(setq org-export-with-toc nil)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)
-   (shell . t)
-   (ruby . t)
-   (gnuplot . t)
-   (emacs-lisp . t)
-   ;;(ess-julia . t)
-   (C . t)
-   (latex . t)
-   (ein . t)
-   ;;(ipython . t)
-   ))
+  (setq org-bullets-face-name 'org-bullet-face)
+  (setq org-bullets-bullet-list '("✙" "♱" "♰" "☥" "✞" "✟" "✝" "†" "✠" "✚" "✜" "✛" "✢" "✣" "✤" "✥"))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (shell . t)
+     (ruby . t)
+     (gnuplot . t)
+     (emacs-lisp . t)
+     ;;(ess-julia . t)
+     (C . t)
+     (latex . t)
+     (ein . t)
+     ;;(ipython . t)
+     ))
+  )
+
+
 
 (defun my/org-inline-css-hook (exporter)
   "Redefine the html `EXPORTER'.
@@ -242,7 +243,6 @@ Insert custom inline css to automatically set the background of code to whatever
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-
 (add-to-list 'org-latex-classes
              '("article"
                "\\documentclass[11pt,a4paper]{article}
@@ -275,7 +275,6 @@ Insert custom inline css to automatically set the background of code to whatever
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")))
-
 
 (add-to-list 'org-latex-classes
              '("ebook"
