@@ -73,10 +73,10 @@
   ("h u z f tab" (insert (title-author-info)))
 
   ;; math environment
-  ("d e f tab"                (make 'definition))
-  ("l e m tab"                (make 'lemma))
-  ("p r o p tab"              (make 'proposition))
-  ("t h m tab"                (make 'theorem))
+  ("d e f tab" (make 'definition))
+  ("l e m tab" (make 'lemma))
+  ("p r o p tab" (make 'proposition))
+  ("t h m tab" (make 'theorem))
   ("p f tab" (make 'proof))
   ("n o t e tab" (make 'note))
   ("r k tab" (make 'remark))
@@ -91,11 +91,12 @@
   ("p y tab" (my/session-small "python"))
   ("g r a p h tab" (my/session-small "graph"))
   ("m m a tab" (my/session-small "mma"))
-  ("m m a f o l d tab" (my/fold-small "mma" "" 0))
-  ("g f o l d tab" (my/fold-small "graph" "%tikz -width 300" 16))
+  ("m m a f o l d tab" (my/fold-small "mma" ""))
+  ("g f o l d tab" (my/fold-small "graph" "%tikz -width 300"))
   ("m a x i m a tab"(my/session-small "maxima"))
   ("t k c d tab" (my/tikz #t))
   ("t k tab" (my/tikz #f))
+  ("i n p u t tab" (my/input))
 
   ;; insert some code
   ("' ' ' c p p return"       (make 'cpp-code))
@@ -114,24 +115,32 @@
   (insert-go-to '(small "") '(0 0))
   (make-session type "default"))
 
-(tm-define (my/fold-small type line index)
-  (insert-go-to `(center (small (script-input ,type "default" ,line ""))) `(0 0 2 ,index))
+(tm-define (my/fold-small type line)
+  (insert-go-to `(center (small (script-input ,type "default" ,line ""))) `(0 0 2 ,(string-length line)))
   (insert-raw-return))
 
 ;; insert a tikz executable fold with prescribed text
 (tm-define (my/tikz cd?)
   (:secure #t)
-  (insert-go-to '(center (script-input "tikz" "default" "%tikz -width 0.318par" "")) '(0 2 21))
+  (my/fold-small "tikz" "%tikz -width 0.318par")
 ;;  (insert-go-to '(center "") '(0 0))
 ;;  (insert-go-to '(script-input "tikz" "default" "" "") '(2 0))
 ;;  (insert "%tikz -width 0.318par")
-  (insert-raw-return)
   (when cd?
     (insert "\\usetikzlibrary{cd}")
     (insert-return)))
 
 (tm-define (my/comment)
-  (insert-go-to '(with "color" "blue" "[huzf: ]") '(2 7)))
+  (let ((s "[huzf: ]"))
+      (insert-go-to `(with "color" "blue" ,s) `(2 ,(- (string-length s) 1)))))
+
+(tm-define (my/input)
+  (my/fold-small "graph" "%tikz -width 400")
+
+  (insert "\\documentclass[10pt]{standalone}")
+  (insert-raw-return)
+  (insert "\\input{/home/huzf/tex-src/}")
+  )
 
 ;; add a comment
 ;; (use-modules (various comment-edit))
