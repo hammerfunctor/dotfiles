@@ -113,38 +113,38 @@
 ;; besides, `(if (window-system) (set-frame-size (selected-frame) 124 40))`
 ;; is also nice and concise
 ;;(set-frame-size-according-to-resolution)
-(add-to-list 'default-frame-alist (cons 'width 130))
-(add-to-list 'default-frame-alist (cons 'height 50))
+;;(add-to-list 'default-frame-alist (cons 'width 130))
+;;(add-to-list 'default-frame-alist (cons 'height 50))
 
 ;; ============================== Julia
 ;;(add-hook 'julia-mode-hook 'julia-repl-mode)
 (add-hook 'julia-mode-hook 'julia-snail-mode)
 
-(defun my/ijulia-console ()
-  "Runs IJulia in a `term' buffer."
-  (interactive)
-  (require 'term)
-  (let* ((rawjlversion (shell-command-to-string "julia --version"))
-         (jversion (replace-regexp-in-string " version \\([^.]*[.][^.]*\\).*$" "-\\1" rawjlversion))
-         (cmd "jupyter")
-         (args (concat " console --kernel=" jversion))
-         (switches (split-string-and-unquote args))
-         (termbuf (apply 'make-term "IJulia Console" cmd nil switches)))
-    (set-buffer termbuf)
-    (term-mode)
-    (term-char-mode)
-    (switch-to-buffer termbuf)))
+;; (defun my/ijulia-console ()
+;;   "Runs IJulia in a `term' buffer."
+;;   (interactive)
+;;   (require 'term)
+;;   (let* ((rawjlversion (shell-command-to-string "julia --version"))
+;;          (jversion (replace-regexp-in-string " version \\([^.]*[.][^.]*\\).*$" "-\\1" rawjlversion))
+;;          (cmd "jupyter")
+;;          (args (concat " console --kernel=" jversion))
+;;          (switches (split-string-and-unquote args))
+;;          (termbuf (apply 'make-term "IJulia Console" cmd nil switches)))
+;;     (set-buffer termbuf)
+;;     (term-mode)
+;;     (term-char-mode)
+;;     (switch-to-buffer termbuf)))
 
-(defun my/julia-repl ()
-  "Runs Julia in a screen session in a `term' buffer."
-  (interactive)
-  (require 'term)
-  (let* ((args (split-string-and-unquote "julia"))
-         (termbuf (apply 'make-term "Julia REPL" "screen" nil args)))
-    (set-buffer termbuf)
-    (term-mode)
-    (term-char-mode)
-    (switch-to-buffer termbuf)))
+;; (defun my/julia-repl ()
+;;   "Runs Julia in a screen session in a `term' buffer."
+;;   (interactive)
+;;   (require 'term)
+;;   (let* ((args (split-string-and-unquote "julia"))
+;;          (termbuf (apply 'make-term "Julia REPL" "screen" nil args)))
+;;     (set-buffer termbuf)
+;;     (term-mode)
+;;     (term-char-mode)
+;;     (switch-to-buffer termbuf)))
 
 ;; ============================== Julia end
 

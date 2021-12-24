@@ -1,0 +1,13 @@
+
+links = {
+  {src='alacritty/alacritty.yml', dst='~/.config/alacritty/alacritty.yml'},
+  {src='emacs', dst='~/.emacs.d/lisp', mode='children'},
+  {src='nvim', dst='~/.config/nvim', mode='sub'},
+  {src='texmacs', dst='~/.TeXmacs', mode='children'},
+  {src='zsh/zshrc', dst='~/.zshrc'},
+}
+
+scripts = {
+  'clash/clash-oneshot.sh',
+}
+
