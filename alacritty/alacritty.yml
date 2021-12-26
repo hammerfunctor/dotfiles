@@ -10,7 +10,7 @@ env:
 
 window:
   dimensions:
-    columns: 90
+    columns: 110
     lines: 38
 
   # Specified in number of pixels.

@@ -22,13 +22,12 @@ alias jp="export http_proxy=http://${P_IP}:${P_PORT}/ && export https_proxy=http
 alias gpx="git config --global http.proxy 'socks5://${P_IP}:${SK_PORT}/' && git config --global https.proxy 'socks5://${P_IP}:${SK_PORT}/'"
 alias ugpx="git config --global --unset http.proxy && git config --global --unset https.proxy"
 
-
-[ -z $(which nvim) ] || alias vim="nvim"
-[ -z $(which lsd) ] || alias ls="lsd"
-[ -z $(which bat) ] || alias cat="bat"
-[ -z $(which fd) ] || alias fdd="fd -E Android"
-[ -z $(which jupyter) ] || alias jn="jupyter notebook --no-browser"
-[ -z $(which podman) ] || alias docker="podman"
+[ -z $(command -v nvim) ] || alias vim="nvim"
+[ -z $(command -v lsd) ] || alias ls="lsd"
+[ -z $(command -v bat) ] || alias cat="bat"
+[ -z $(command -v fd) ] || alias fdd="fd -E Android"
+[ -z $(command -v jupyter) ] || alias jn="jupyter notebook --no-browser"
+[ -z $(command -v podman) ] || alias docker="podman"
 [ -f $HOME/.julia/sys_ohmyrepl.so ] && alias j="julia --sysimage $HOME/.julia/sys_ohmyrepl.so"
 
 if [ $(uname) = "Linux" ]; then
