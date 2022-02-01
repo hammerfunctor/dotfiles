@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 [ -z $(which julia) ] && echo "julia not found, cannot build OhMyREPL." && exit 0
 julia -e 'using Pkg; Pkg.add(["PackageCompiler","OhMyREPL"])'

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 [ -d $HOME/.rbenv ] && echo "rbenv found." && exit 0
 

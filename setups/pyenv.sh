@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 [ -d $HOME/.pyenv ] && echo "pyenv found." && exit 0
 

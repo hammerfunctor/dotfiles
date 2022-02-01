@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 [ "$(lsb_release -i --short)" != "Arch" ] && exit 1
 

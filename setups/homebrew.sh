@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 [ "$(uname)" =~ "Darwin" ] && echo "Not a Mac, not to install homebrew" && exit 0
 [ ! -z $(command -v brew) ] && echo "homebrew already installed." && echo 0
