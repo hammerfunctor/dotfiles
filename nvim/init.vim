@@ -9,6 +9,11 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 " Rime
 au BufNewFile,BufRead *.dict.yaml set softtabstop=0 noexpandtab
 
+" mutt
+au BufRead /tmp/mutt-* set tw=72
+au BufRead,BufNewFile *.dockerfile,Dockerfile.* set filetype=dockerfile
+
+
 call plug#begin('~/.vim/plugged')
 Plug 'Yggdroot/indentLine'
 " Plug 'projekt0n/github-nvim-theme'
