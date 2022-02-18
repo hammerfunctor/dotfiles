@@ -90,7 +90,7 @@
 
 
 ;;(set-frame-font "FiraCode Nerd Font Mono 11" nil t)
-(set-face-font 'default "FiraCode Nerd Font Mono 11") ;; for x11
+(set-face-font 'default "FiraCode Nerd Font Mono 14") ;; for x11
 (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
 (set-face-attribute 'variable-pitch nil :family "Noto Serif")
 ;;(set-face-font 'default "FiraCode Nerd Font Mono 13") ;; for wayland
@@ -149,7 +149,7 @@
 ;; ============================== Julia end
 
 ;; ============================== ein
-(setq ein:output-area-inlined-images t)
+;;(setq ein:output-area-inlined-images t)
 ;; ============================== ein end
 
 ;; ============================== org-mode
@@ -186,7 +186,7 @@
      ;;(ess-julia . t)
      (C . t)
      (latex . t)
-     (ein . t)
+     ;;(ein . t)
      ;;(ipython . t)
      ))
   )
