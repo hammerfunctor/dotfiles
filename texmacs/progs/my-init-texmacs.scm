@@ -44,6 +44,14 @@
  ("A-G" (set-image-size (find-image (cursor-tree)) "0.318par"))
 
  ("M-E p" (my/export-to-pdf))
+
+ ;; dices
+ ("@ tab 1" "<#2680>")
+ ("@ tab 2" "<#2681>")
+ ("@ tab 3" "<#2682>")
+ ("@ tab 4" "<#2683>")
+ ("@ tab 5" "<#2684>")
+ ("@ tab 6" "<#2685>")
  )
 
 (kbd-map
