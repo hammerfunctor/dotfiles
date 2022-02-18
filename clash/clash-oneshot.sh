@@ -15,6 +15,7 @@ sed -i \
   -e 's/^mixed-port: .*$/mixed-port: 7891/' \
   -e 's/^log-level: .*$/log-level: silent/' \
   -e 's/^bind-address: .*$/bind-address: 0.0.0.0/' \
+  -e 's/^allow-lan: .*$/allow-lan: true/' \
   $cfgfname
 
 
@@ -22,6 +23,7 @@ sed -i \
 # so we create an extra config file to match all url with a first 'MATCH'
 globalname=$(dirname $cfgfname)/config.global.yaml
 sed \
+  -e 's/^external-contr.*$/external-controller: 127\.0\.0\.1:9092/' \
   -e 's/^port: .*$/port: 7892/' \
   -e 's/^socks-port: .*$/socks-port: 7892/' \
   -e 's/^mixed-port: .*$/mixed-port: 7892/' \
