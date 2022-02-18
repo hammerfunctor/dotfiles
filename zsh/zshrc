@@ -17,6 +17,7 @@ source $ZSH/oh-my-zsh.sh
 [ -z $(command -v jupyter) ] || alias jn="jupyter notebook --no-browser"
 [ -z $(command -v podman) ] || alias docker="podman"
 [ -f $HOME/.julia/sys_ohmyrepl.so ] && alias j="julia --sysimage $HOME/.julia/sys_ohmyrepl.so"
+alias ssh="TERM=xterm-color ssh"
 alias mutt='pushd ~/Downloads/attachments && mutt && popd'
 
 if [ $(uname) = "Linux" ]; then
@@ -25,9 +26,7 @@ if [ $(uname) = "Linux" ]; then
   alias pbpaste='xclip -selection clipboard -o'
 fi
 
-
 alias a="aria2-docker.sh"
 alias cross="CROSS_CONTAINER_ENGINE=podman cross"
-alias macterm="export TERM=vt102"
 
 source $HOME/.zshrc-local
