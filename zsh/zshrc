@@ -9,6 +9,14 @@ plugins=( git extract sudo )
 source $ZSH/oh-my-zsh.sh
 ################################
 
+# only for desktop environment
+case $(uname) in
+  Linux); OPEN="xdg-open";;
+  Darwin); OPEN="open";;
+esac
+
+function fdopen { $OPEN "$(fd $@ | fzf)" }
+function fde { $EDITOR "$(fd $@ | fzf)" }
 
 [ -z $(command -v nvim) ] || alias vim="nvim"
 [ -z $(command -v lsd) ] || alias ls="lsd"
@@ -20,8 +28,9 @@ source $ZSH/oh-my-zsh.sh
 alias ssh="TERM=xterm-color ssh"
 alias mutt='pushd ~/Downloads/attachments && mutt && popd'
 
-if [ $(uname) = "Linux" ]; then
-  alias open="xdg-open"
+# clipboard in use => desktop environment
+if [[ $(uname)~="Linux" ]]; then
+  alias open="$OPEN"
   alias pbcopy='xclip -selection clipboard'
   alias pbpaste='xclip -selection clipboard -o'
 fi
