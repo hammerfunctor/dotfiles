@@ -27,6 +27,8 @@
 
   <assign|ketbra|<macro|x|y|\|<arg|x>\<rangle\>\<langle\><arg|y>\|>>
 
+  <assign|bok|<macro|left|op|right|\<langle\><arg|left>\|<arg|op>\|<arg|right>\<rangle\>>>
+
   \;
 </body>
 
