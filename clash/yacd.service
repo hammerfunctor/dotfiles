@@ -1,0 +1,11 @@
+[Unit]
+Description=Yet Another Clash Dashboard
+After=network.target
+
+[Service]
+Type=exec
+Restart=on-abort
+ExecStart=/usr/bin/darkhttpd /usr/share/yacd --port 9091 --addr 127.0.0.1
+
+[Install]
+WantedBy=default.target
