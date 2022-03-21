@@ -2,6 +2,18 @@ filetype plugin on
 lua require('basic')
 lua require('kbd')
 
+set backupskip+=*.asc
+
+augroup GPG
+"  autocmd!
+  autocmd BufReadPre    *.asc :set shada=
+  autocmd BufReadPost   *.asc :%!gpg -q -d
+  autocmd BufReadPost   *.asc |redraw!
+  autocmd BufWritePre   *.asc :%!gpg -q -c -a
+  autocmd BufWritePost  *.asc u
+  autocmd VimLeave      *.asc :!clear
+augroup END
+
 " resume last closed line
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
@@ -12,6 +24,7 @@ au BufNewFile,BufRead *.dict.yaml set softtabstop=0 noexpandtab
 " mutt
 au BufRead /tmp/mutt-* set tw=72
 au BufRead,BufNewFile *.dockerfile,Dockerfile.* set filetype=dockerfile
+
 
 
 call plug#begin('~/.vim/plugged')
