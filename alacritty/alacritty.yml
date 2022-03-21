@@ -1,7 +1,8 @@
-
 # starting with `/`, or  `~/`. Loaded in order, later override former
 import:
-  - /usr/share/alacritty/dracula.yml
+  - ~/dotfiles/alacritty/night-owl.yml
+  - ~/dotfiles/alacritty/breeze.yml
+  - ~/dotfiles/alacritty/newmoon.yml
 
 # `env` entry will be added as environment variables.
 env:
@@ -29,7 +30,7 @@ window:
   # Values for `decorations`:
   #     - full: Borders and title bar
   #     - none: Neither borders nor title bar
-  decorations: none
+  decorations: full
 
   # Startup Mode (changes require restart)
   #
