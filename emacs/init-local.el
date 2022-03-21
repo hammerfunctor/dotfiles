@@ -329,12 +329,26 @@ Insert custom inline css to automatically set the background of code to whatever
 (add-hook 'c++-mode-hook 'lsp)
 (add-hook 'rust-mode-hook 'lsp)
 
+(add-to-list 'lsp-language-id-configuration '(wolfram-mode . "Mathematica"))
+(lsp-register-client
+ (make-lsp-client
+  :language-id 'wolfram
+  :new-connection (lsp-tcp-server-command
+                   (lambda (port)
+                     `("wolframscript"
+                       ,(concat "--socket=" (number-to-string port)))))
+  :major-modes '(wolfram-mode)
+  :server-id 'lsp-wl))
+
+
 (setq ;;gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-idle-delay 0.0
-      company-minimul-prefix-length 1
-      lsp-idle-delay 0.1) ;; clangd is fase
+ read-process-output-max (* 1024 1024)
+ treemacs-space-between-root-nodes nil
+ company-idle-delay 0.0
+ company-minimul-prefix-length 1
+ lsp-idle-delay 0.1) ;; clangd is fase
+
+
 
 ;;(with-eval-after-load 'lsp-mode
 ;;  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
@@ -343,4 +357,4 @@ Insert custom inline css to automatically set the background of code to whatever
 
 
 (provide 'init-local)
-;;; init-local ends here
+;;; init-local.el ends here
