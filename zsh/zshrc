@@ -15,8 +15,23 @@ case $(uname) in
   Darwin); OPEN="open";;
 esac
 
-function fdopen { $OPEN "$(fd $@ | fzf)" }
+function fdopen { $OPEN "$(fd $@ | fzf)" 1>/dev/null }
 function fde { $EDITOR "$(fd $@ | fzf)" }
+
+# e.g.: sendfileto file1 file2 file3 example@gmail.com
+# then these three files are sent to example@gmail.com via your local smtp server
+# you can even define a function sendfile() { sendfileto $@ yourprivate@email.com } in ~/.zshrc-local
+function sendfileto {
+  local files=" "
+  for x in "${@:1:$# - 1}"; do
+    if [[ -f $x ]]; then
+      files+="-a $x "
+    else
+      echo "file: $x not found."
+    fi
+  done
+  eval "echo \"Just some files\" | mailx -A ssender -s \"Files from $HOST\" $files ${@[$#]}"
+}
 
 [ -z $(command -v nvim) ] || alias vim="nvim"
 [ -z $(command -v lsd) ] || alias ls="lsd"
@@ -26,7 +41,7 @@ function fde { $EDITOR "$(fd $@ | fzf)" }
 [ -z $(command -v podman) ] || alias docker="podman"
 [ -f $HOME/.julia/sys_ohmyrepl.so ] && alias j="julia --sysimage $HOME/.julia/sys_ohmyrepl.so"
 alias ssh="TERM=xterm-color ssh"
-alias mutt='pushd ~/Downloads/attachments && mutt && popd'
+#alias mutt='pushd ~/tmp/attachments && mutt && popd'
 
 # clipboard in use => desktop environment
 if [[ $(uname)~="Linux" ]]; then
@@ -35,7 +50,8 @@ if [[ $(uname)~="Linux" ]]; then
   alias pbpaste='xclip -selection clipboard -o'
 fi
 
-alias a="aria2-docker.sh"
-alias cross="CROSS_CONTAINER_ENGINE=podman cross"
+alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))" '
+alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))" '
+
 
 source $HOME/.zshrc-local
