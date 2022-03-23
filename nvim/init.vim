@@ -4,6 +4,11 @@ lua require('kbd')
 
 set backupskip+=*.asc
 
+let mapleader=';'
+map <Leader>n :bn<cr>
+map <Leader>p :bp<cr>
+map <Leader>d :bd<cr>
+
 augroup GPG
 "  autocmd!
   autocmd BufReadPre    *.asc :set shada=

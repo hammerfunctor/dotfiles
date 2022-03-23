@@ -8,6 +8,11 @@ local opt = {noremap =  true, silent = true}
 map('n', '<C-u>', '9k', opt)
 map('n', '<C-d>', '9j', opt)
 
+-- buffer operations
+--map('n', 'gn', ':bn<cr>', opt)
+--map('n', 'gp', ':bp<cr>', opt)
+--map('n', 'gd', ':bd<cr>', opt)
+
 -- jump between windows
 map('n', '<A-j>', '<C-w>j', opt)
 map('n', '<A-k>', '<C-w>k', opt)
