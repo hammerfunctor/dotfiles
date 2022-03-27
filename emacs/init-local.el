@@ -14,6 +14,10 @@
   ;;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
   ;;(setq exec-path (append exec-path '("/usr/local/bin")))
 
+  ;;(define-key global-map (kbd "C-c t") (lambda () (term "/bin/zsh")))
+  (global-set-key (kbd "C-c t") (lambda () (interactive) (term "/bin/zsh")))
+
+
   (setq
    make-backup-files nil
    inhibit-startup-screen t
@@ -40,16 +44,20 @@
 
 (require-package 'rust-mode)
 (require-package 'julia-mode)
-(require-package 'lsp-mode)
+;;(require-package 'lsp-mode)
 (require-package 'markdown-mode)
 ;;(require-package 'julia-repl)
 (require-package 'vterm)
 (require-package 'julia-snail)
 
+(require-package 'snow)
+(require-package 'systemd)
 
-;;(require-package 'ess)
+
 (require-package 'ein)
 ;;(require-package 'ob-ipython)
+
+;;(require-package 'ess)
 ;;(require-package 'ob-ess-julia)
 ;;(defalias 'org-babel-execute:julia 'org-babel-execute:ess-julia)
 
@@ -58,18 +66,28 @@
 ;;(require-package 'yasnippet)
 ;;(require-package 'helm-xref)
 
+;;(require 'eaf)
+;;(require 'eaf-demo)
+;;(require 'eaf-pdf-viewer)
+;;(require 'eaf-org-previewer)
+
 (pdf-loader-install)
 
 ;; cycle color themes
 (setq my/color-themes
-      '(leuven-dark
-	leuven
-	cyberpunk
+      '(;;leuven-dark
+        ;;leuven
+        ;;cyberpunk
         ;;tron-legacy
+        sanityinc-tomorrow-night
+        sanityinc-solarized-dark
+        sanityinc-tomorrow-eighties
+        sanityinc-tomorrow-blue
         kingsajz
         pok-wog
         aliceblue
-        poet)
+        ;;poet
+        )
       themes-to-cycle nil)
 
 (defun my/theme-cycle ()
@@ -82,6 +100,7 @@
     (message "%s" theme-current)
     (setq themes-to-cycle (cdr themes-to-cycle))))
 
+
 (my/theme-cycle)
 
 (global-set-key [f4] 'my/theme-cycle)
@@ -93,10 +112,12 @@
 (set-face-font 'default "FiraCode Nerd Font Mono 14") ;; for x11
 (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
 (set-face-attribute 'variable-pitch nil :family "Noto Serif")
+(set-fontset-font t 'symbol "OpenMoji")
 ;;(set-face-font 'default "FiraCode Nerd Font Mono 13") ;; for wayland
 ;;(set-face-font 'default "Source Code Pro 10")
 ;;(set-face-font 'default "Hack 10")
-(set-fontset-font t 'symbol "Noto Color Emoji")
+;;(set-fontset-font t 'symbol "Noto Color Emoji")
+
 
 
 ;; set window size
@@ -104,12 +125,12 @@
   "Dynamically set window size."
   (if (window-system)
       (progn
-	(if (> (x-display-pixel-width) 1280)
-	    (add-to-list 'default-frame-alist (cons 'width 120))
-	  (add-to-list 'default-frame-alist (cons 'width 60)))
-	(add-to-list 'default-frame-alist
-		     (cons 'height (/ (- (x-display-pixel-height) 180)
-				      (frame-char-height)))))))
+        (if (> (x-display-pixel-width) 1280)
+            (add-to-list 'default-frame-alist (cons 'width 120))
+          (add-to-list 'default-frame-alist (cons 'width 60)))
+        (add-to-list 'default-frame-alist
+                     (cons 'height (/ (- (x-display-pixel-height) 180)
+                                      (frame-char-height)))))))
 ;; besides, `(if (window-system) (set-frame-size (selected-frame) 124 40))`
 ;; is also nice and concise
 ;;(set-frame-size-according-to-resolution)
@@ -149,32 +170,59 @@
 ;; ============================== Julia end
 
 ;; ============================== ein
-;;(setq ein:output-area-inlined-images t)
+(setq ein:output-area-inlined-images t)
+;;(setq ein:shared-output-cell t)
 ;; ============================== ein end
 
 ;; ============================== org-mode
 (add-hook 'text-mode-hook
           (lambda ()
-            ;;            (variable-pitch-mode 1)
+            ;;(variable-pitch-mode 1)
             ))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq
+             ;;electric-indent-mode nil
+             org-adapt-indentation t
+             )
+            (org-bullets-mode 1)))
 
 (with-eval-after-load 'org
   (setq truncate-lines nil)
-  (setq truncate-lines nil)
   (setq org-format-latex-options
         (plist-put org-format-latex-options :scale 2.0))
-  (setq org-html-validation-link t)
-  (setq org-startup-numerated t)
-  (setq org-num-skip-commented t)
-  (setq org-num-skip-unnumbered t)
-  (setq org-num-skip-footnotes t)
-  (setq org-src-fontify-natively t)
-  (setq org-startup-folded 'content)
+  (setq org-html-validation-link t
+        org-startup-numerated t
+        org-num-skip-commented t
+        org-num-skip-unnumbered t
+        org-num-skip-footnotes t
+        org-src-fontify-natively t
+        org-startup-folded 'content)
   ;;(setq org-export-with-toc nil)
 
-  (setq org-bullets-face-name 'org-bullet-face)
-  (setq org-bullets-bullet-list '("✙" "♱" "♰" "☥" "✞" "✟" "✝" "†" "✠" "✚" "✜" "✛" "✢" "✣" "✤" "✥"))
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  ;;(setq org-bullets-face-name 'org-bullet-face)
+  (defcustom org-bullets-face-name nil
+    "This variable allows the org-mode bullets face to be
+overridden. If set to a name of a face, that face will be
+used. Otherwise the face of the heading level will be used.")
+
+  ;; (setq org-bullets-bullet-list
+  ;;       '("✙" "♱" "♰" "☥" "✞" "✟" "✝" "†" "✠" "✚" "✜" "✛" "✢" "✣" "✤" "✥"))
+  (defcustom org-bullets-bullet-list
+    '(;;; Large
+      "☯️"
+      "◉"
+      "○"
+      "✸"
+      "✿"
+
+      ;; ♥ ● ◇ ✚ ✜ ☯ ◆ ♠ ♣ ♦ ☢ ❀ ◆ ◖ ▶
+      ;; Small
+      ;; ► • ★ ▸
+      )
+    "This variable contains the list of bullets.
+It can contain any number of symbols, which will be repeated.")
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -186,7 +234,8 @@
      ;;(ess-julia . t)
      (C . t)
      (latex . t)
-     ;;(ein . t)
+     (julia . t)
+     (ein . t)
      ;;(ipython . t)
      ))
   )
@@ -198,11 +247,11 @@
 Insert custom inline css to automatically set the background of code to whatever theme I'm using."
   (when (eq exporter 'html)
     (let* ((my-pre-bg (face-background 'default))
-	   (my-pre-fg (face-foreground 'default)))
+           (my-pre-fg (face-foreground 'default)))
       (setq org-html-head-extra
-	    (concat
-	     org-html-head-extra
-	     (format "<style type=\"text/css\"> pre.src { background-color: %s; color: %s; } </style>" my-pre-bg my-pre-fg))))))
+            (concat
+             org-html-head-extra
+             (format "<style type=\"text/css\"> pre.src { background-color: %s; color: %s; } </style>" my-pre-bg my-pre-fg))))))
 ;; (add-hook 'org-export-before-processing-hook 'my/org-inline-css-hook)
 
 (unless (boundp 'org-latex-classes)
@@ -325,28 +374,32 @@ Insert custom inline css to automatically set the background of code to whatever
 ;;(define-key global-map [remap switch-to-buffer] #'helm-mini)
 
 ;;(which-key-mode)
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
-(add-hook 'rust-mode-hook 'lsp)
+;;(add-hook 'c-mode-hook 'lsp)
+;;(add-hook 'c++-mode-hook 'lsp)
+;;(add-hook 'rust-mode-hook 'lsp)
 
-(add-to-list 'lsp-language-id-configuration '(wolfram-mode . "Mathematica"))
-(lsp-register-client
- (make-lsp-client
-  :language-id 'wolfram
-  :new-connection (lsp-tcp-server-command
-                   (lambda (port)
-                     `("wolframscript"
-                       ,(concat "--socket=" (number-to-string port)))))
-  :major-modes '(wolfram-mode)
-  :server-id 'lsp-wl))
+;; (eval-after-load 'lsp
+;;   '(lambda ()
+;;      (add-to-list 'lsp-language-id-configuration '(wolfram-mode . "Mathematica"))
+;;      (lsp-register-client
+;;       (make-lsp-client
+;;        :language-id 'wolfram
+;;        :new-connection (lsp-tcp-server-command
+;;                         (lambda (port)
+;;                           `("wolframscript"
+;;                             ,(concat "--socket=" (number-to-string port)))))
+;;        :major-modes '(wolfram-mode)
+;;        :server-id 'lsp-wl))))
 
 
-(setq ;;gc-cons-threshold (* 100 1024 1024)
- read-process-output-max (* 1024 1024)
- treemacs-space-between-root-nodes nil
- company-idle-delay 0.0
- company-minimul-prefix-length 1
- lsp-idle-delay 0.1) ;; clangd is fase
+
+
+;; (setq ;;gc-cons-threshold (* 100 1024 1024)
+;;  read-process-output-max (* 1024 1024)
+;;  treemacs-space-between-root-nodes nil
+;;  company-idle-delay 0.0
+;;  company-minimul-prefix-length 1
+;;  lsp-idle-delay 0.1) ;; clangd is fase
 
 
 
