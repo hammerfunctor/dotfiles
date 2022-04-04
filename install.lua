@@ -3,7 +3,7 @@
 test = false
 
 basedir = os.getenv('PWD') ..'/'.. debug.getinfo(1).source:match("@?(.*/)")
-dofile(basedir .. 'config') -- global variables: links, scripts
+dofile(basedir .. 'config.lua') -- global variables: links, scripts
 
 function run_scripts()
   -- run scripts
