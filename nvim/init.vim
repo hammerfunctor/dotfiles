@@ -11,12 +11,12 @@ map <Leader>d :bd<cr>
 
 augroup GPG
 "  autocmd!
-  autocmd BufReadPre    *.asc :set shada=
-  autocmd BufReadPost   *.asc :%!gpg -q -d
-  autocmd BufReadPost   *.asc |redraw!
-  autocmd BufWritePre   *.asc :%!gpg -q -c -a
-  autocmd BufWritePost  *.asc u
-  autocmd VimLeave      *.asc :!clear
+  autocmd BufReadPre    *.asc,*.gpg :set shada=
+  autocmd BufReadPost   *.asc,*.gpg :%!gpg -q -d
+  autocmd BufReadPost   *.asc,*.gpg |redraw!
+  autocmd BufWritePre   *.asc,*.gpg :%!gpg -q -c -a
+  autocmd BufWritePost  *.asc,*.gpg u
+  autocmd VimLeave      *.asc,*.gpg :!clear
 augroup END
 
 " resume last closed line

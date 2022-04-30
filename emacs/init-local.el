@@ -139,7 +139,12 @@
 
 ;; ============================== Julia
 ;;(add-hook 'julia-mode-hook 'julia-repl-mode)
-(add-hook 'julia-mode-hook 'julia-snail-mode)
+;;(add-hook 'julia-mode-hook 'julia-snail-mode)
+(add-hook 'julia-mode-hook
+          (lambda ()
+            (defvar julia-snail-extensions '(repl-history formatter ob-julia))
+            (julia-snail-mode)
+            ))
 
 ;; (defun my/ijulia-console ()
 ;;   "Runs IJulia in a `term' buffer."
@@ -350,7 +355,7 @@ Insert custom inline css to automatically set the background of code to whatever
      '("Description: "
        "#+TITLE: " \n
        "#+AUTHOR: Hammer Hu" \n
-       "#+DATE: " (format-time-string "%A,%e %B, %Y, %H:%M") \n
+       "#+DATE: " (format-time-string "%A, %e %B, %Y, %H:%M") \n
        "#+SETUPFILE: " \n
        \n)))
 

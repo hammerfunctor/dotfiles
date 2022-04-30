@@ -14,8 +14,8 @@ case $(uname) in
   Darwin); OPEN="open";;
 esac
 
-function fdopen { $OPEN "$(fd $@ | fzf)" 1>/dev/null }
-function fdb { $OPEN "$(fd -e pdf -e djvu -e epub -e mobi "$*" | fzf)" 1>/dev/null }
+function fdopen { $OPEN "$(fd $@ | fzf)" &>/dev/null }
+function fdb { $OPEN "$(fd -e pdf -e djvu -e epub -e mobi "$*" | fzf)" &>/dev/null }
 function fde { $EDITOR "$(fd $@ | fzf)" }
 
 # e.g.: sendfileto file1 file2 file3 example@gmail.com
@@ -39,7 +39,7 @@ function sendfileto {
 [ -z "$(command -v fd)" ] || alias fdd="fd -E Android"
 [ -z "$(command -v jupyter)" ] || alias jn="jupyter notebook --no-browser"
 [ -z "$(command -v podman)" ] || alias docker="podman"
-[ -f $HOME/.julia/sys_ohmyrepl.so ] && alias j="julia --sysimage $HOME/.julia/sys_ohmyrepl.so"
+[ -z "$(command -v julia)" ] || alias j="julia --sysimage $HOME/.julia/compiled/sys_ohmyrepl.so"
 alias ssh="TERM=xterm-color ssh"
 #alias mutt='pushd ~/tmp/attachments && mutt && popd'
 
