@@ -1,0 +1,12 @@
+[Unit]
+Description=Mailbox synchronization service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mbsync -Va
+#ExecStartPost=/usr/bin/notmuch new
+#ExecStartPost=/usr/bin/mu index
+#ExecStartPost=/usr/bin/emacsclient -e '(mu4e-update-index)'
+
+[Install]
+WantedBy=default.target

@@ -42,6 +42,9 @@
  ("A-V" (clipboard-paste-import "verbatim" "primary"))
  ("A-L" (clipboard-paste-import "latex" "primary"))
  ("A-G" (set-image-size (find-image (cursor-tree)) "0.318par"))
+;; ("M-x" (insert "This is Meta-X"))
+;; ("A-x" (insert "This is Alt-X"))
+;; ("C-l" (insert "This is Ctrl-l"))
 
  ("M-E p" (my/export-to-pdf))
 
