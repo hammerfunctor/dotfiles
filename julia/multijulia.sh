@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-# configure julia precompile cache per machine
+# This script helps to configure Julia precompile cache pre machine for
+# my linux installed in a removable disk
+
+# configure julia DEPOTPATH
 depotpath="${1:-$HOME/.julia}"
 
 multijulia() {
@@ -19,8 +22,8 @@ multijulia() {
       # e.g.: Intel(R) Core(TM) i7-10700 CPU @ 2900 kHz
       uuid="$(echo $uuid | sed -nr 's/.*:\s*(.*) @ .*/\1/p')";;
     *)
-      # do nothing
-      ;;
+      # log it
+      echo "println(\"NOT parsed cpu name: '$uuid'\")" >> $HOME/.julia/config/startup.jl;;
   esac
 
   [[ -z "$uuid" ]] && echo "capture nothing as cpu name" && exit 1
