@@ -109,14 +109,19 @@
 
 
 ;;(set-frame-font "FiraCode Nerd Font Mono 11" nil t)
+
 (set-face-font 'default "FiraCode Nerd Font Mono 14") ;; for x11
-(set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
-(set-face-attribute 'variable-pitch nil :family "Noto Serif")
-(set-fontset-font t 'symbol "OpenMoji")
 ;;(set-face-font 'default "FiraCode Nerd Font Mono 13") ;; for wayland
 ;;(set-face-font 'default "Source Code Pro 10")
 ;;(set-face-font 'default "Hack 10")
+
+(set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono")
+(set-face-attribute 'variable-pitch nil :family "Noto Serif")
+
+(set-fontset-font t 'symbol "OpenMoji Black")
 ;;(set-fontset-font t 'symbol "Noto Color Emoji")
+
+
 
 
 
@@ -143,6 +148,7 @@
 (add-hook 'julia-mode-hook
           (lambda ()
             (defvar julia-snail-extensions '(repl-history formatter ob-julia))
+            (defvar julia-snail-extra-args '("-t 4"))
             (julia-snail-mode)
             ))
 
@@ -178,6 +184,8 @@
 (setq ein:output-area-inlined-images t)
 ;;(setq ein:shared-output-cell t)
 ;; ============================== ein end
+
+(add-hook 'zig-mode-hook 'eglot-ensure)
 
 ;; ============================== org-mode
 (add-hook 'text-mode-hook
