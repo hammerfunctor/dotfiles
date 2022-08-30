@@ -3,8 +3,8 @@
 sysimage="${1:-$HOME/.julia/compiled/sys_ohmyrepl.so}"
 
 [[ -z $(command -v julia) ]] && echo "julia not found, cannot build OhMyREPL." && exit 0
-julia -e 'using Pkg; Pkg.add(["PackageCompiler","OhMyREPL"])'
-julia -e "
+/usr/bin/julia -e 'using Pkg; Pkg.add(["PackageCompiler","OhMyREPL"])'
+/usr/bin/julia -e "
 using PackageCompiler;
 PackageCompiler.create_sysimage(
   :OhMyREPL;
