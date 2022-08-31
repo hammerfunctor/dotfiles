@@ -7,10 +7,6 @@
 (set-session-multiline-input "gnuplot" "default" #t)
 (set-session-multiline-input "graph" "default" #t)
 
-(tm-define (my-init-page-screen)
-  (init-page-rendering "automatic"))
-
-
 
 
 ;;(use-modules (texmacs menus main-menu))
@@ -46,6 +42,7 @@
  ("A-V" (clipboard-paste-import "verbatim" "primary"))
  ("A-l p" (clipboard-paste-import "latex" "primary"))
  ("A-l c" (clipboard-copy-export "latex" "primary"))
+ ("A-c s" (init-page-rendering "automatic")) ; page breaking -> screen
  ("A-G" (set-image-size (find-image (cursor-tree)) "0.318par"))
  ;; ("M-x" (insert "This is Meta-X"))
  ;; ("A-x" (insert "This is Alt-X"))

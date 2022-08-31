@@ -36,7 +36,7 @@
 
   <assign|info-flag|detailed>
 
-  <assign|page-medium|papyrus>
+  \;
 
   \;
 </body>
