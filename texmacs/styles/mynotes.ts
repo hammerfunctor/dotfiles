@@ -36,11 +36,14 @@
 
   <assign|info-flag|detailed>
 
+  <assign|page-medium|papyrus>
+
   \;
 </body>
 
 <\initial>
   <\collection>
+    <associate|page-medium|screen>
     <associate|preamble|true>
   </collection>
 </initial>

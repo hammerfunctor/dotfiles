@@ -7,6 +7,10 @@
 (set-session-multiline-input "gnuplot" "default" #t)
 (set-session-multiline-input "graph" "default" #t)
 
+(tm-define (my-init-page-screen)
+  (init-page-rendering "automatic"))
+
+
 
 
 ;;(use-modules (texmacs menus main-menu))
