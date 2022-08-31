@@ -28,13 +28,17 @@
 
   <use-package|preview-ref|number-long-article>
 
-  use-package comment
-
   <use-package|framed-theorems>
 
   <use-package|qtm>
 
   <assign|info-flag|detailed>
+
+  <assign|page-medium|automatic>
+
+  use-package comment
+
+  \;
 
   \;
 
