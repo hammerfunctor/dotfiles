@@ -3,7 +3,7 @@
 test = false
 
 basedir = os.getenv('PWD') ..'/'.. debug.getinfo(1).source:match("@?(.*/)")
-dofile(basedir .. 'config.lua') -- global variables: links, scripts
+dofile(basedir .. 'config.lua') -- global variables: links, scripts, copies
 
 function run_scripts()
   -- run scripts
@@ -28,11 +28,23 @@ function run_links(forced)
   link(links,forced)
 end
 
+function run_copies()
+  for i = 1,#copies do
+    copies[i].src = basedir .. copies[i].src
+
+    if test then
+      copies[i].dst = basedir .. copies[i].dst
+    end
+  end
+  copy(links)
+end
+
 function dirname(s)
   return is_dir(s) and (s:match("(.*)/") or s) or (s:match("(.*)/.*") or '.')
 end
 
 function link_sf(src, dst); os.execute('ln -sf ' .. src .. ' ' .. dst); end
+function cp_r(src, dst); os.execute('cp -r ' .. src .. ' ' .. dst); end
 function exists(name); return os.execute('[ -e ' ..name.. ' ]'); end
 function is_file(name); return os.execute('[ -f ' ..name.. ' ]'); end
 function is_link(name); return os.execute('[ -L ' ..name.. ' ]'); end
@@ -64,6 +76,19 @@ function childjobs(s, d)
   end
   
   return children
+end
+
+function copy(jobs)
+  for i = 1, #jobs do
+    local item = jobs[i]
+    local src, dst = item.src, item.dst
+    if item.mode == 'overwrite' then
+      if exists(dst) then
+        rm(dst)
+      end
+      cp_r(src, dst)
+    end
+  end
 end
 
 function link(jobs, forced)
