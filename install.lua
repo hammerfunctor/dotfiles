@@ -36,7 +36,7 @@ function run_copies()
       copies[i].dst = basedir .. copies[i].dst
     end
   end
-  copy(links)
+  copy(copies)
 end
 
 function dirname(s)
@@ -171,6 +171,7 @@ function main()
   if arghas('all') then
     run_links(forced)
     run_scripts()
+    run_copies()
   elseif arghas('links') and not arghas('scripts') then
     run_links(forced)
   elseif arghas('scripts') and not arghas('links') then
