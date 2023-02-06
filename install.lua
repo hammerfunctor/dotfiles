@@ -98,7 +98,7 @@ function link(jobs, forced)
     local src, dst = item.src, item.dst
 
     if is_file(src) then
-      print('link ' .. src .. ' <= ' .. dst)
+      print('link ' .. src .. ' <- ' .. dst)
       if is_link_or_not_exists_but_parent_exists(dst) then
         -- a link, or not exists but dir exists
         rm(dst)

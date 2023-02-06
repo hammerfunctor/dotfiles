@@ -1,11 +1,11 @@
 
 links = {
 --   {src='alacritty/alacritty.yml', dst='~/.config/alacritty/alacritty.yml'},
-  {src='emacs', dst='~/.emacs.d/lisp', mode='children'},
-  {src='nvim', dst='~/.config/nvim', mode='sub'},
+--  {src='emacs', dst='~/.emacs.d/lisp', mode='children'},
+--  {src='nvim', dst='~/.config/nvim', mode='sub'},
   {src='texmacs', dst='~/.TeXmacs', mode='children'},
-  {src='zsh/zshrc', dst='~/.zshrc'},
-  {src='gpg-agent.conf', dst='~/.gnupg/gpg-agent.conf'},
+--  {src='zsh/zshrc', dst='~/.zshrc'},
+--  {src='gpg-agent.conf', dst='~/.gnupg/gpg-agent.conf'},
 }
 
 scripts = {
@@ -13,5 +13,5 @@ scripts = {
 }
 
 copies = {
-  {src='alacritty', dst='~/.config/alacritty', mode='overwrite'},
+--  {src='alacritty', dst='~/.config/alacritty', mode='overwrite'},
 }
