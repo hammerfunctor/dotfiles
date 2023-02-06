@@ -9,14 +9,28 @@ source $ZSH/oh-my-zsh.sh
 ################################
 
 # only for desktop environment
-case $(uname) in
+[[ -z "$OPEN" ]] && case $(uname) in
   Linux); OPEN="xdg-open";;
   Darwin); OPEN="open";;
 esac
 
-fdopen() { $OPEN "$(fd $@ | fzf)" &>/dev/null }
-fdedit() { $EDITOR "$(fd $@ | fzf)" }
+# clipboard in use => desktop environment
+if [[ $(uname) = "Linux" ]]; then
+  function open { xdg-open $@ 2>/dev/null }
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+fi
+
+# use:
+# OPEN=okular fdopen bookname
+# to override the reader
+fdopen() { $OPEN "$(fd -tf -tl $@ | fzf)" &>/dev/null }
+fdedit() { $EDITOR "$(fd -tf -tl $@ | fzf)" }
+fdcd() { cd "$(fd -td $@ | fzf)" }
+fdcp() { pbcopy -rmlastnl <<< "$(fd -tf $@ | fzf)" }
 alias b="fdopen -e pdf -e epub -e djvu -e mobi "
+alias bd="OPEN=sioyek fdopen -e pdf -e epub -e djvu -e mobi "
+alias bcp="fdcp -e pdf -e epub -e djvu -e mobi "
 
 # e.g.: sendfileto file1 file2 file3 example@gmail.com
 # then these three files are sent to example@gmail.com via your local smtp server
@@ -34,7 +48,7 @@ function sendfileto {
 }
 
 [ -z "$(command -v nvim)" ] || alias vim="nvim"
-[ -z "$(command -v lsd)" ] || alias ls="lsd"
+#[ -z "$(command -v lsd)" ] || alias ls="lsd"
 #[ -z "$(command -v bat)" ] || alias cat="bat"
 #[ -z "$(command -v fd)" ] || alias fdd="fd -E Android"
 #[ -z "$(command -v jupyter)" ] || alias jn="jupyter notebook --no-browser"
@@ -45,15 +59,30 @@ function sendfileto {
 alias ssh="TERM=xterm-color ssh"
 #alias mutt='pushd ~/tmp/attachments && mutt && popd'
 
-# clipboard in use => desktop environment
-if [[ $(uname) = "Linux" ]]; then
-  function open { xdg-open $@ 2>/dev/null }
-  alias pbcopy='xclip -selection clipboard'
-  alias pbpaste='xclip -selection clipboard -o'
-fi
 
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))" '
 alias urlencode='python3 -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))" '
 
+# daemonized julia
+dj() {
+  local j_session="julia-daemon"
+  local j_npipe="/tmp/julia-daemon-output"
+  tmux has -t $j_session &>/dev/null || tmux new -d -s $j_session julia
 
-[[ -f "$HOME/.zshrc-local" ]] && source "$HOME/.zshrc-local"
+  if [[ -z "$@" ]]; then
+    tmux a -t $j_session 
+  else
+    mkfifo $j_npipe
+    tmux send -t "$j_session" "
+      cd(\"$PWD\")
+        redirect_stdio(stdout=\"$j_npipe\", stderr=\"$j_npipe\") do
+        tmp = try; $@; catch e; println(stderr, e); end
+        println(tmp)
+      end" Enter
+    cat $j_npipe
+    unlink "$j_npipe"
+  fi
+}
+
+require_sh () { [[ -f "$1" ]] && source "$1" || touch "$1" }
+require_sh $HOME/.zshrc-local
