@@ -30,6 +30,8 @@
   <assign|bok|<macro|left|op|right|\<langle\><arg|left>\|<arg|op>\|<arg|right>\<rangle\>>>
 
   \;
+
+  \;
 </body>
 
 <\initial>

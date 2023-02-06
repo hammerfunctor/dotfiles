@@ -40,9 +40,10 @@
 
   \;
 
-  \;
+  <assign|general-cmt|<macro|name|body|<compound|render-todo|dark blue|pastel
+  blue|<arg|name>: <arg|body>>>>
 
-  \;
+  <assign|cmt|<macro|body|<general-cmt|huzf|<arg|body>>>>
 </body>
 
 <\initial>
